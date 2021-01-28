@@ -39,6 +39,7 @@ namespace GeneralStoreAPI.Controllers {
         }
 
         //Get
+        [Route("api/Product/{sku}")] //Defined Route so I did not get the sku=?{sku}
         [HttpGet]
         public async Task<IHttpActionResult> GetProductBySku(string sku) {
             Product product = await _context.Products.FindAsync(sku);
@@ -49,7 +50,40 @@ namespace GeneralStoreAPI.Controllers {
         }
 
         //Put
+        [Route("api/Product/{sku}")] //Defined Route so I did not get the sku=?{sku}
+        [HttpPut]
+        public async Task<IHttpActionResult> EditProduct([FromUri] string sku, [FromBody] Product UpdatedProduct) {
+            if (sku != UpdatedProduct?.SKU)
+                return BadRequest("SKUs do not match");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Product product = await _context.Products.FindAsync(sku);
+
+            if (product is null)
+                return NotFound();
+
+            product.Name = UpdatedProduct.Name;
+            product.Cost = UpdatedProduct.Cost;
+            product.NumberInInventory = UpdatedProduct.NumberInInventory;
+
+            await _context.SaveChangesAsync();
+            return Ok("Update was successful");
+        }
 
         //Delete
+        [Route("api/Product/{sku}")] //Defined Route so I did not get the sku=?{sku}
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteProduct([FromUri] string sku) {
+            Product product = await _context.Products.FindAsync(sku);
+            if(product != null)
+            _context.Products.Remove(product);
+
+            if (await _context.SaveChangesAsync() == 1)
+                return  Ok("Delete Successful");
+
+            return InternalServerError();
+
+        }
     }
 }
