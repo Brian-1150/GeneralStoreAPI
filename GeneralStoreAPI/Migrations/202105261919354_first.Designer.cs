@@ -7,13 +7,13 @@ namespace GeneralStoreAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedProductPoco : IMigrationMetadata
+    public sealed partial class first : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedProductPoco));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(first));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101270359541_ChangedProductPoco"; }
+            get { return "202105261919354_first"; }
         }
         
         string IMigrationMetadata.Source

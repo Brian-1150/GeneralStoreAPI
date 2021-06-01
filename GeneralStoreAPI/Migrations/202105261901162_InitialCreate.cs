@@ -3,10 +3,31 @@ namespace GeneralStoreAPI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Customers",
+                c => new
+                    {
+                        CustomerId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.CustomerId);
+            
+            CreateTable(
+                "dbo.Products",
+                c => new
+                    {
+                        SKU = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false),
+                        Cost = c.Double(nullable: false),
+                        NumberInInventory = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.SKU);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -94,6 +115,8 @@ namespace GeneralStoreAPI.Migrations
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Products");
+            DropTable("dbo.Customers");
         }
     }
 }

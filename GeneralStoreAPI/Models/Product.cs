@@ -6,7 +6,8 @@ using System.Web;
 
 namespace GeneralStoreAPI.Models {
     public class Product {
-        [Key, Required, Editable(false)]
+
+        [Key, Required]
         public string SKU { get; set; }
 
         [Required]
